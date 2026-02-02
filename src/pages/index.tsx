@@ -7,14 +7,14 @@ export default function Page() {
  return (
     <>
       <Head>
-        <title>Orbix | Google Reviews Widget for Any Website</title>
+        <title>Orbix | Embeddable Widgets & Tools Platform</title>
         <meta
           name="description"
-          content="Embed beautiful Google Reviews widgets on your site in minutes. No iframes. Fully customizable. Fast, SEO-safe, and secure."
+          content="Build and embed custom widgets on any website. Fast, secure, and production-ready. Add reviews, consent banners, chat, forms, and more with one script tag."
         />
         <meta
           name="keywords"
-          content="google reviews widget, reviews embed, testimonials, social proof, saas"
+          content="embeddable widgets, website widgets, embed platform, iframe widgets, website tools, SaaS"
         />
       </Head>
       <Box sx={{
@@ -44,18 +44,18 @@ export default function Page() {
           }}>
             <Stack spacing={3} sx={{ maxWidth: 900 }}>
               <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <Chip label="Google Reviews Widget" color="secondary" variant="outlined" />
+                <Chip label="Embed Platform" color="secondary" variant="outlined" />
               </Box>
               <Typography variant="h1" sx={{
                 fontWeight: 600,
                 fontSize: { xs: 36, md: 64 },
               }}>
-                Turn Google Reviews into
-                <Box component="span" sx={{ color: "primary.main", marginLeft: 1 }}>instant trust</Box>
+                Powerful widgets,
+                <Box component="span" sx={{ color: "primary.main", marginLeft: 1 }}>effortless integration</Box>
               </Typography>
               <Typography variant="body1" sx={{ fontWeight: 300, fontSize: 18 }}>
-                Create a beautiful, fast, and fully customizable reviews widget.
-                Copy one script tag and embed it anywhere. No iframes. No bloat.
+                Deploy custom widgets to any website with a single script tag. 
+                Built for performance, security, and scale. No configuration required.
               </Typography>
               <Stack direction={{ xs: "column", sm: "row" }} spacing={2} justifyContent="center">
                 <Button variant="contained" size="large">Get started</Button>
@@ -70,10 +70,10 @@ export default function Page() {
                   justifyContent="center"
                 >
                   {[
-                    "Shadow DOM isolation",
+                    "iframe sandbox",
                     "Custom themes",
-                    "Cache reviews",
-                    "Fast API",
+                    "Auto-scaling",
+                    "Global CDN",
                   ].map((item) => (
                     <Chip key={item} label={item} variant="outlined" color="secondary" />
                   ))}
@@ -93,16 +93,16 @@ export default function Page() {
             >
               {[
                 {
-                  title: "Connect a place",
-                  desc: "Paste a Google Maps URL, CID, or Place ID. We resolve and fetch reviews.",
+                  title: "Configure",
+                  desc: "Set up your widget with custom data, styling, and behavior options.",
                 },
                 {
                   title: "Customize",
-                  desc: "Pick layout, colors, and review filters to match your brand.",
+                  desc: "Choose layouts, colors, and content filters to match your brand.",
                 },
                 {
-                  title: "Embed",
-                  desc: "Use one script tag: www.orbix.software/widget/UUID.js",
+                  title: "Deploy",
+                  desc: "Copy the embed code and drop it into any website. Live in seconds.",
                 },
               ].map((card) => (
                 <Box

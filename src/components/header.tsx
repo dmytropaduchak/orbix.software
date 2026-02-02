@@ -25,7 +25,7 @@ export default function Header() {
             <Typography component="h1" sx={{
               fontSize: "12px",
             }}>
-              BRAINIAC.software
+              ORBIX.software
             </Typography>
         </Link>
       </Box>

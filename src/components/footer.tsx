@@ -107,7 +107,7 @@ export default function Footer() {
             </div>
           </ClickAwayListener>
           <Typography color="secondary" variant="caption">
-            © {new Date().getFullYear()} BRAINIAC.software
+            © {new Date().getFullYear()} ORBIX.software
           </Typography>
         </Box>
         <Box sx={{

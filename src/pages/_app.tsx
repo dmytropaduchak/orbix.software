@@ -127,7 +127,7 @@ export default function _App(props: AppProps) {
     return path.startsWith("/") ? path : `/${path}`;
   }, [asPath]);
   
-  const canonicalUrl = `https://www.brainiac.software${canonicalPath}`;
+  const canonicalUrl = `https://www.orbix.software${canonicalPath}`;
 
   return (
     <AppCacheProvider {...props}>

@@ -40,7 +40,7 @@ export default function Ukraine() {
             <Typography noWrap={false} variant="body2" sx={{
               marginBottom: 1,
             }}>
-              <b>BRAINIAC.software</b> stands in solidarity with the Ukrainian people against the Russian invasion.
+              <b>ORBIX.software</b> stands in solidarity with the Ukrainian people against the Russian invasion.
             </Typography>
             <Typography color="textSecondary" variant="caption" sx={{ display: "flex", alignItems: "center" }}>
               Find out how you can help.

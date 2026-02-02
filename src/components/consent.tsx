@@ -92,7 +92,7 @@ export default function Consent() {
             <Typography noWrap={false} variant="body2" sx={{
               marginBottom: 2,
             }}>
-              <b>BRAINIAC.software</b> uses a few tracking technologies to keep insights accurate and your experience secure. You can choose what to share.
+              <b>ORBIX.software</b> uses a few tracking technologies to keep insights accurate and your experience secure. You can choose what to share.
             </Typography>
             <Button
               variant="outlined"
@@ -159,7 +159,7 @@ export default function Consent() {
             <Typography variant="body1" color="secondary" sx={{
               paddingBottom: 2,
               fontWeight: 200,
-            }}>BRAINIAC.software uses a few tracking technologies to keep insights accurate and your experience secure. You can choose what to share.</Typography>
+            }}>ORBIX.software uses a few tracking technologies to keep insights accurate and your experience secure. You can choose what to share.</Typography>
             {settings.map((i, key) => (
               <Accordion key={key} slotProps={{
                 root: {

@@ -15,9 +15,9 @@ export default function NotFound() {
   return (
     <>
       <Head>
-        <title>Page Not Found | brainiac.software</title>
-        <meta name="description" content="The page you're looking for does not exist. Explore brainiac.software to discover a variety of self-tests and insights." />
-        <meta name="keywords" content="404 error, missing page, brainiac.software" />
+        <title>Page Not Found | orbix.software</title>
+        <meta name="description" content="The page you're looking for does not exist. Explore orbix.software to discover a variety of self-tests and insights." />
+        <meta name="keywords" content="404 error, missing page, orbix.software" />
       </Head>
       <Header/>
       <Box sx={{
