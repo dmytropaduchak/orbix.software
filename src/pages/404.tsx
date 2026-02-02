@@ -16,7 +16,7 @@ export default function NotFound() {
     <>
       <Head>
         <title>Page Not Found | orbix.software</title>
-        <meta name="description" content="The page you're looking for does not exist. Explore orbix.software to discover a variety of self-tests and insights." />
+        <meta name="description" content="The page you're looking for does not exist. Return to orbix.software to explore our widget and embed platform." />
         <meta name="keywords" content="404 error, missing page, orbix.software" />
       </Head>
       <Header/>

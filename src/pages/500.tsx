@@ -16,7 +16,7 @@ export default function InternalServerError() {
     <>
       <Head>
         <title>Server Error | orbix.software</title>
-        <meta name="description" content="Something went wrong. Please try again later while we restore orbix.software online test services." />
+        <meta name="description" content="Something went wrong. Our team is working to resolve this issue. Please try again shortly." />
         <meta name="keywords" content="500 error, server error, technical issue, orbix.software" />
       </Head>
       <Header/>
