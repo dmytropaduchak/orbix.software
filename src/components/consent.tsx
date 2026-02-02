@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography, SnackbarContent, Button, Dialog, DialogTitle, DialogContent, DialogActions, Accordion, AccordionSummary, AccordionDetails, useTheme } from "@mui/material";
+import { Card, CardContent, Typography, SnackbarContent, Button, Dialog, DialogTitle, DialogContent, DialogActions, Accordion, AccordionSummary, AccordionDetails, useTheme, Box } from "@mui/material";
 import { useCallback, useState } from "react";
 import { useAtom } from "jotai";
 import { CONSENT, atom } from "../atom/atom";
@@ -92,7 +92,7 @@ export default function Consent() {
             <Typography noWrap={false} variant="body2" sx={{
               marginBottom: 2,
             }}>
-              <b>ORBIX.software</b> uses a few tracking technologies to keep insights accurate and your experience secure. You can choose what to share.
+              <Box component="span" color="primary.main">ORBIX</Box>.software uses a few tracking technologies to keep insights accurate and your experience secure. You can choose what to share.
             </Typography>
             <Button
               variant="outlined"

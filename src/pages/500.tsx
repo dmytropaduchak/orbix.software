@@ -15,9 +15,9 @@ export default function InternalServerError() {
   return (
     <>
       <Head>
-        <title>Server Error | orbix.software</title>
+        <title>Server Error | ORBIX.software</title>
         <meta name="description" content="Something went wrong. Our team is working to resolve this issue. Please try again shortly." />
-        <meta name="keywords" content="500 error, server error, technical issue, orbix.software" />
+        <meta name="keywords" content="500 error, server error, technical issue, ORBIX.software" />
       </Head>
       <Header/>
       <Box sx={{

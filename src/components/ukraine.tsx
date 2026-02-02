@@ -1,5 +1,5 @@
 import { Close } from "@mui/icons-material";
-import { Card, CardActionArea, CardContent, IconButton, Typography, SnackbarContent, useTheme } from "@mui/material";
+import { Card, CardActionArea, CardContent, IconButton, Typography, SnackbarContent, useTheme, Box } from "@mui/material";
 import { useState, useCallback } from "react";
 
 export default function Ukraine() {
@@ -40,7 +40,7 @@ export default function Ukraine() {
             <Typography noWrap={false} variant="body2" sx={{
               marginBottom: 1,
             }}>
-              <b>ORBIX.software</b> stands in solidarity with the Ukrainian people against the Russian invasion.
+              <Box component="span" color="primary.main">ORBIX</Box>.software stands in solidarity with the Ukrainian people against the Russian invasion.
             </Typography>
             <Typography color="textSecondary" variant="caption" sx={{ display: "flex", alignItems: "center" }}>
               Find out how you can help.

@@ -24,17 +24,22 @@ export interface Message {
   text: string;
 }
 
+export enum WIDGETS {
+  GOOGLE_REVIEWS = "google-reviews",
+}
+
 export interface State {
   messages: Message[];
   consent?: CONSENT;
   consentSettings?: Record<string, CONSENT>;
   color: string;
   theme: THEMES | PaletteMode;
+  widget?: WIDGETS;
 }
 
 export const atom = atomWithStorage<State>(name, {
   theme: THEMES.DARK,
-  color: "#ea3accff",
+  color: "rgb(105, 234, 58)",
   messages: [],
 });
 

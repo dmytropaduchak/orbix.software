@@ -1,18 +1,15 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { Typography, useTheme, Box, ClickAwayListener, Tooltip } from "@mui/material";
+import { Typography, useTheme, Box, ClickAwayListener, Tooltip, Link, tooltipClasses, rgbToHex } from "@mui/material";
 import { useAtom } from "jotai";
 import { HexColorPicker } from "react-colorful";
 import { atom, THEMES } from "../atom/atom";
 import Switch from "./switch";
-import { useRouter } from "next/router";
 
 export default function Footer() {
   const theme = useTheme();
   const [data, setData] = useAtom(atom);
   const [checked, setChecked] = useState(false);
   const [open, setOpen] = useState(false);
-
-  const router = useRouter()
 
   useEffect(() => {
     setChecked(data.theme === THEMES.LIGHT);
@@ -82,11 +79,18 @@ export default function Footer() {
                 disableHoverListener
                 disableTouchListener
                 title={
-                  <HexColorPicker color={data.color} onChange={onChangeColor} />
+                  <HexColorPicker color={rgbToHex(data.color)} onChange={onChangeColor} />
                 }
                 slotProps={{
                   popper: {
                     disablePortal: true,
+                    sx: {
+                      [`&.${tooltipClasses.popper}[data-popper-placement*="top"] .${tooltipClasses.tooltip}`]:
+                        {
+                          marginBottom: '16px',
+                          marginLeft: '16px',
+                        },
+                    },
                   },
                 }}
               >
@@ -116,6 +120,59 @@ export default function Footer() {
           justifyContent: "center",
           alignItems: "center",
         }}>
+          <Typography variant="caption" sx={{
+            marginLeft: 2,
+            whiteSpace: "nowrap",
+            fontWeight: 200,
+          }}>
+            <Link href="/contact-us" color="secondary" underline="none" sx={{
+              "&:hover": {
+                color: "primary.main",
+              },
+            }}>
+              Contact Us
+            </Link>
+          </Typography>
+          <Typography variant="caption" sx={{
+            marginLeft: 2,
+            whiteSpace: "nowrap",
+            fontWeight: 200,
+          }}>
+            <Link href="/terms-and-agreements" color="secondary" underline="none" sx={{
+              "&:hover": {
+                color: "primary.main",
+              },
+            }}>
+              Terms and Agreements
+            </Link>
+          </Typography>
+          <Typography variant="caption" sx={{
+            marginLeft: 2,
+            whiteSpace: "nowrap",
+            fontWeight: 200,
+          }}>
+            <Link href="/cookie-statement" color="secondary" underline="none" sx={{
+              "&:hover": {
+                color: "primary.main",
+              },
+            }}>
+              Cookie Statement
+            </Link>
+          </Typography>
+          <Typography variant="caption" sx={{
+            marginLeft: 2,
+            whiteSpace: "nowrap",
+            fontWeight: 200,
+            marginRight: 2,
+          }}>
+            <Link href="/privacy-statement" color="secondary" underline="none" sx={{
+              "&:hover": {
+                color: "primary.main",
+              },
+            }}>
+              Privacy Statement
+            </Link>
+          </Typography>
           <Switch size="small" color="primary" aria-label="Change Theme" checked={checked} onChange={onChangeTheme} />
         </Box>
       </Box>
