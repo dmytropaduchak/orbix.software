@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Chip, Stack, Typography } from "@mui/material";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import Head from "next/head";
@@ -7,14 +7,14 @@ export default function Page() {
  return (
     <>
       <Head>
-        <title>brainiac.software | A Brand Hub for GitHub Apps</title>
+        <title>Orbix | Google Reviews Widget for Any Website</title>
         <meta
           name="description"
-          content="brainiac.software is the umbrella brand for GitHub apps and experiments. New tools and product ideas will launch here over time."
+          content="Embed beautiful Google Reviews widgets on your site in minutes. No iframes. Fully customizable. Fast, SEO-safe, and secure."
         />
         <meta
           name="keywords"
-          content="brainiac.software, github apps, developer tools, indie apps, product experiments, software projects"
+          content="google reviews widget, reviews embed, testimonials, social proof, saas"
         />
       </Head>
       <Box sx={{
@@ -42,35 +42,86 @@ export default function Page() {
             paddingLeft: 2,
             paddingRight: 2,
           }}>
-            <Box sx={{
-              maxWidth: 720,
-              position: "relative"
-            }}>
-              {/* <Box sx={{
-                position: "absolute",
-                left: 0,
-                top: -32,
-              }}>
-                <Chip
-                  label="Trusted UK Auto Locksmith Experts"
-                  color="secondary"
-                  variant="outlined"
-                  icon={<SecurityOutlined fontSize="small"/>}
-                />
-              </Box> */}
+            <Stack spacing={3} sx={{ maxWidth: 900 }}>
+              <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <Chip label="Google Reviews Widget" color="secondary" variant="outlined" />
+              </Box>
               <Typography variant="h1" sx={{
-                fontWeight: 500,
-                fontSize: 60,
-                flexWrap: "wrap",
+                fontWeight: 600,
+                fontSize: { xs: 36, md: 64 },
               }}>
-                <Box component="span" sx={{ color: "primary.main" }}>GitHub Applications</Box> and Developer Tools Hub
+                Turn Google Reviews into
+                <Box component="span" sx={{ color: "primary.main", marginLeft: 1 }}>instant trust</Box>
               </Typography>
-
-              <Typography variant="body1" sx={{
-                fontWeight: 300,
-              }}>
-                A central place to explore GitHub applications and developer tools, ranging from production-ready automations to experimental concepts.
+              <Typography variant="body1" sx={{ fontWeight: 300, fontSize: 18 }}>
+                Create a beautiful, fast, and fully customizable reviews widget.
+                Copy one script tag and embed it anywhere. No iframes. No bloat.
               </Typography>
+              <Stack direction={{ xs: "column", sm: "row" }} spacing={2} justifyContent="center">
+                <Button variant="contained" size="large">Get started</Button>
+                <Button variant="outlined" size="large">Live demo</Button>
+              </Stack>
+              <Box sx={{ marginTop: 4 }}>
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  useFlexGap
+                  flexWrap="wrap"
+                  justifyContent="center"
+                >
+                  {[
+                    "Shadow DOM isolation",
+                    "Custom themes",
+                    "Cache reviews",
+                    "Fast API",
+                  ].map((item) => (
+                    <Chip key={item} label={item} variant="outlined" color="secondary" />
+                  ))}
+                </Stack>
+              </Box>
+            </Stack>
+          </Box>
+          <Box sx={{ width: "100%", paddingX: 2, paddingBottom: 6 }}>
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" },
+                gap: 2,
+                maxWidth: 1200,
+                margin: "0 auto",
+              }}
+            >
+              {[
+                {
+                  title: "Connect a place",
+                  desc: "Paste a Google Maps URL, CID, or Place ID. We resolve and fetch reviews.",
+                },
+                {
+                  title: "Customize",
+                  desc: "Pick layout, colors, and review filters to match your brand.",
+                },
+                {
+                  title: "Embed",
+                  desc: "Use one script tag: www.orbix.software/widget/UUID.js",
+                },
+              ].map((card) => (
+                <Box
+                  key={card.title}
+                  sx={{
+                    border: "1px solid",
+                    borderColor: "divider",
+                    borderRadius: 2,
+                    padding: 3,
+                  }}
+                >
+                  <Typography variant="h6" sx={{ fontWeight: 600, marginBottom: 1 }}>
+                    {card.title}
+                  </Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 300 }}>
+                    {card.desc}
+                  </Typography>
+                </Box>
+              ))}
             </Box>
           </Box>
           <Footer />
