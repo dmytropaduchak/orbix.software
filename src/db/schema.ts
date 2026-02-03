@@ -1,18 +1,6 @@
-import {
-  pgTable,
-  serial,
-  text,
-  timestamp,
-  integer,
-  boolean,
-  jsonb,
-  varchar,
-  uniqueIndex,
-  index,
-} from "drizzle-orm/pg-core";
-import { relations } from "drizzle-orm";
+import { pgTable, serial, timestamp, boolean, jsonb, varchar } from "drizzle-orm/pg-core";
+// import { relations } from "drizzle-orm";
 
-// ==================== USERS ====================
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   email: varchar("email").notNull().unique(),
@@ -24,85 +12,105 @@ export const users = pgTable("users", {
   passwordResetExpiredAt: timestamp("password_reset_expired_at"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-  deletedAt: timestamp("deleted_at"),
 });
 
-export const usersRelations = relations(users, ({ many }) => ({
-  widgets: many(widgets),
-}));
+export const widgets = pgTable("widgets", {
+  id: serial("id").primaryKey(),
+  uuid: varchar("uuid"),
+  type: varchar("type"),
+  name: varchar("name"),
+  config: jsonb("config"),
+  userId: serial("user_id"),
+  active: boolean("active").default(true),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
 
-// ==================== WIDGETS ====================
-export const widgets = pgTable(
-  "widgets",
-  {
-    id: serial("id").primaryKey(),
-    userId: integer("user_id")
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    publicId: varchar("public_id", { length: 50 }).notNull().unique(), // for embed URL
+export const subscriptions = pgTable("subscriptions", {
+  id: serial("id").primaryKey(),
+  uuid: varchar("uuid"),
+  userId: serial("user_id"),
+  widgetId: serial("widget_id"),
+  data: jsonb("data"),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+  
+export const transactions = pgTable("transactions", {
+  id: serial("id").primaryKey(),
+  subscriptionId: serial("subscription_id"),
+  uuid: varchar("uuid"),
+  data: jsonb("data"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
 
-    // Place Information
-    placeId: varchar("place_id", { length: 255 }).notNull(), // Google Place ID
-    placeName: varchar("place_name", { length: 500 }),
-    placeAddress: text("place_address"),
-    placeMapsUrl: text("place_maps_url"),
-    
-    // Widget Configuration
-    name: varchar("name", { length: 255 }).notNull(),
-    layout: varchar("layout", { length: 20 }).notNull().default("grid"), // grid, carousel, badge, list
-    theme: varchar("theme", { length: 20 }).notNull().default("light"), // light, dark, auto
-    primaryColor: varchar("primary_color", { length: 7 }).default("#1976d2"),
-    maxReviews: integer("max_reviews").notNull().default(10),
-    minRating: integer("min_rating").default(1), // 1-5
-    showDate: boolean("show_date").notNull().default(true),
-    showRating: boolean("show_rating").notNull().default(true),
-    showAttribution: boolean("show_attribution").notNull().default(true),
-    customCss: text("custom_css"),
-    
-    // Cached Reviews & Place Data
-    cachedData: jsonb("cached_data").$type<{
-      rating?: number;
-      userRatingsTotal?: number;
-      reviews: Array<{
-        id: string;
-        authorName: string;
-        authorPhoto?: string;
-        rating: number;
-        text?: string;
-        relativeTime?: string;
-        time?: string;
-      }>;
-    }>().default({ reviews: [] }),
-    cachedAt: timestamp("cached_at"),
+export const googlePlaces = pgTable("google_places", {
+  id: serial("id").primaryKey(),
+  uuid: varchar("uuid").notNull(),
+  data: jsonb("data").notNull(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
 
-    // Subscription / Billing
-    stripeSubscriptionId: varchar("stripe_subscription_id", { length: 255 }),
-    planName: varchar("plan_name", { length: 100 }).default("starter"),
-    price: integer("price").default(500), // in cents
-    interval: varchar("interval", { length: 20 }).default("month"),
-    reviewRefreshHours: integer("review_refresh_hours").default(24),
-    subscriptionStatus: varchar("subscription_status", { length: 50 }), // active, canceled, past_due, trialing
-    currentPeriodStart: timestamp("current_period_start"),
-    currentPeriodEnd: timestamp("current_period_end"),
-    cancelAtPeriodEnd: boolean("cancel_at_period_end").default(false),
+// export const usersRelations = relations(users, ({ many }) => ({
+//   // widgets: many(widgets),
+// }));
     
-    // Settings
-    active: boolean("active").notNull().default(true),
-    
-    createdAt: timestamp("created_at").notNull().defaultNow(),
-    updatedAt: timestamp("updated_at").notNull().defaultNow(),
-  },
-  (table) => ({
-    publicIdIdx: uniqueIndex("widgets_public_id_idx").on(table.publicId),
-    userIdx: index("widgets_user_idx").on(table.userId),
-    placeIdIdx: index("widgets_place_id_idx").on(table.placeId),
-  })
-);
+    //   publicId: varchar("public_id", { length: 50 }).notNull().unique(), // for embed URL
 
-export const widgetsRelations = relations(widgets, ({ one }) => ({
-  user: one(users, {
-    fields: [widgets.userId],
-    references: [users.id],
-  }),
-}));
+    // // Place Information
+    // placeId: varchar("place_id", { length: 255 }).notNull(), // Google Place ID
+    // placeName: varchar("place_name", { length: 500 }),
+    // placeAddress: text("place_address"),
+    // placeMapsUrl: text("place_maps_url"),
+    
+    // // Widget Configuration
+    // name: varchar("name", { length: 255 }).notNull(),
+    // layout: varchar("layout", { length: 20 }).notNull().default("grid"), // grid, carousel, badge, list
+    // theme: varchar("theme", { length: 20 }).notNull().default("light"), // light, dark, auto
+    // primaryColor: varchar("primary_color", { length: 7 }).default("#1976d2"),
+    // maxReviews: integer("max_reviews").notNull().default(10),
+    // minRating: integer("min_rating").default(1), // 1-5
+    // showDate: boolean("show_date").notNull().default(true),
+    // showRating: boolean("show_rating").notNull().default(true),
+    // showAttribution: boolean("show_attribution").notNull().default(true),
+    // customCss: text("custom_css"),
+    
+    // // Cached Reviews & Place Data
+    // cachedData: jsonb("cached_data").$type<{
+    //   rating?: number;
+    //   userRatingsTotal?: number;
+    //   reviews: Array<{
+    //     id: string;
+    //     authorName: string;
+    //     authorPhoto?: string;
+    //     rating: number;
+    //     text?: string;
+    //     relativeTime?: string;
+    //     time?: string;
+    //   }>;
+    // }>().default({ reviews: [] }),
+    // cachedAt: timestamp("cached_at"),
+
+    // // Subscription / Billing
+    // stripeSubscriptionId: varchar("stripe_subscription_id", { length: 255 }),
+    // planName: varchar("plan_name", { length: 100 }).default("starter"),
+    // price: integer("price").default(500), // in cents
+    // interval: varchar("interval", { length: 20 }).default("month"),
+    // reviewRefreshHours: integer("review_refresh_hours").default(24),
+    // subscriptionStatus: varchar("subscription_status", { length: 50 }), // active, canceled, past_due, trialing
+    // currentPeriodStart: timestamp("current_period_start"),
+    // currentPeriodEnd: timestamp("current_period_end"),
+    // cancelAtPeriodEnd: boolean("cancel_at_period_end").default(false),
+    
+    // // Settings
+    // active: boolean("active").notNull().default(true),
+
+// export const widgetsRelations = relations(widgets, ({ one }) => ({
+//   user: one(users, {
+//     fields: [widgets.userId],
+//     references: [users.id],
+//   }),
+// }));
 

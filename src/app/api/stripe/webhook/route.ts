@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
         break;
 
       case "customer.subscription.deleted":
-        await handleSubscriptionDeleted(event.data.object as Stripe.Subscription);
+        // await handleSubscriptionDeleted(event.data.object as Stripe.Subscription);
         break;
 
       default:
@@ -110,22 +110,22 @@ async function handleSubscriptionUpdate(subscription: Stripe.Subscription) {
   );
 }
 
-async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
-  const existingWidget = await db.query.widgets.findFirst({
-    where: (w, { eq }) =>
-      eq(w.stripeSubscriptionId, subscription.id),
-  });
+// async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
+//   const existingWidget = await db.query.widgets.findFirst({
+//     where: (w, { eq }) =>
+//       eq(w.stripeSubscriptionId, subscription.id),
+//   });
 
-  if (existingWidget) {
-    await db
-      .update(widgets)
-      .set({
-        subscriptionStatus: "canceled",
-        updatedAt: new Date(),
-      })
-      .where(eq(widgets.id, existingWidget.id));
-  }
-}
+//   if (existingWidget) {
+//     await db
+//       .update(widgets)
+//       .set({
+//         subscriptionStatus: "canceled",
+//         updatedAt: new Date(),
+//       })
+//       .where(eq(widgets.id, existingWidget.id));
+//   }
+// }
 
 async function upsertSubscriptionFromStripe(
   subscription: Stripe.Subscription,

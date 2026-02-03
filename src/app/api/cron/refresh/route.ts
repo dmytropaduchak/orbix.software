@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/db";
-import { widgets } from "@/db/schema";
-import { lt, or, isNull, eq } from "drizzle-orm";
+// import { db } from "@/db";
+// import { widgets } from "@/db/schema";
+// import { lt, or, isNull, eq } from "drizzle-orm";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;
@@ -13,58 +13,59 @@ export const maxDuration = 300;
  */
 export async function POST(req: NextRequest) {
   try {
+    console.log(req);
     // Verify cron secret
-    const authHeader = req.headers.get("authorization");
-    if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    // const authHeader = req.headers.get("authorization");
+    // if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    //   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    // }
 
-    const refreshHours =
-      parseInt(process.env.GOOGLE_PLACES_REFRESH_HOURS || "24", 10);
-    const cutoffTime = new Date(Date.now() - refreshHours * 60 * 60 * 1000);
+    // const refreshHours =
+    //   parseInt(process.env.GOOGLE_PLACES_REFRESH_HOURS || "24", 10);
+    // const cutoffTime = new Date(Date.now() - refreshHours * 60 * 60 * 1000);
 
-    // Find widgets that need refresh
-    const widgetsToRefresh = await db.query.widgets.findMany({
-      where: (widgets, { or, isNull, lt }) =>
-        or(isNull(widgets.cachedAt), lt(widgets.cachedAt, cutoffTime)),
-      limit: 50,
-    });
+    // // Find widgets that need refresh
+    // const widgetsToRefresh = await db.query.widgets.findMany({
+    //   where: (widgets, { or, isNull, lt }) =>
+    //     or(isNull(widgets.cachedAt), lt(widgets.cachedAt, cutoffTime)),
+    //   limit: 50,
+    // });
 
-    const results = {
-      success: 0,
-      failed: 0,
-      skipped: 0,
-    };
+    // const results = {
+    //   success: 0,
+    //   failed: 0,
+    //   skipped: 0,
+    // };
 
-    for (const widget of widgetsToRefresh) {
-      try {
-        const reviewsData = await fetchPlaceReviews(widget.placeId);
+    // for (const widget of widgetsToRefresh) {
+    //   try {
+    //     const reviewsData = await fetchPlaceReviews(widget.placeId);
 
-        await db
-          .update(widgets)
-          .set({
-            cachedData: {
-              rating: reviewsData.rating,
-              userRatingsTotal: reviewsData.userRatingsTotal,
-              reviews: reviewsData.reviews,
-            },
-            cachedAt: new Date(),
-            updatedAt: new Date(),
-          })
-          .where(eq(widgets.id, widget.id));
+    //     await db
+    //       .update(widgets)
+    //       .set({
+    //         cachedData: {
+    //           rating: reviewsData.rating,
+    //           userRatingsTotal: reviewsData.userRatingsTotal,
+    //           reviews: reviewsData.reviews,
+    //         },
+    //         cachedAt: new Date(),
+    //         updatedAt: new Date(),
+    //       })
+    //       .where(eq(widgets.id, widget.id));
 
-        results.success++;
-      } catch (error) {
-        console.error(`Failed to refresh widget ${widget.id}:`, error);
-        results.failed++;
-      }
-    }
+    //     results.success++;
+    //   } catch (error) {
+    //     console.error(`Failed to refresh widget ${widget.id}:`, error);
+    //     results.failed++;
+    //   }
+    // }
 
-    return NextResponse.json({
-      message: "Review refresh completed",
-      processed: widgetsToRefresh.length,
-      ...results,
-    });
+    // return NextResponse.json({
+    //   message: "Review refresh completed",
+    //   processed: widgetsToRefresh.length,
+    //   ...results,
+    // });
   } catch (error) {
     console.error("Error in cron job:", error);
     return NextResponse.json(

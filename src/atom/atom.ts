@@ -35,6 +35,7 @@ export interface State {
   color: string;
   theme: THEMES | PaletteMode;
   widget?: WIDGETS;
+  widgetUrl?: string;
 }
 
 export const atom = atomWithStorage<State>(name, {

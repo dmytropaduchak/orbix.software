@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import { db } from "@/db";
-import { WidgetRenderer } from "@/components/widget-renderer";
+// import { db } from "@/db";
+// import { WidgetRenderer } from "@/components/widget-renderer";
 
 /**
  * GET /v1/widgets/[uuid]
@@ -23,7 +23,7 @@ interface WidgetPageProps {
 
 export async function generateMetadata({ params }: WidgetPageProps) {
   const { uuid } = await params;
-
+  console.log(uuid);
   return {
     title: "Widget",
     robots: "noindex, nofollow", // Don't index widget pages
@@ -36,27 +36,28 @@ export async function generateMetadata({ params }: WidgetPageProps) {
  */
 async function getWidgetData(uuid: string) {
   try {
-    const widget = await db.query.widgets.findFirst({
-      where: (widgets, { eq }) => eq(widgets.publicId, uuid),
-      with: {
-        user: true,
-      },
-    });
+    console.log(uuid);
+    // const widget = await db.query.widgets.findFirst({
+    //   where: (widgets, { eq }) => eq(widgets.publicId, uuid),
+    //   with: {
+    //     user: true,
+    //   },
+    // });
 
-    if (!widget || !widget.active) {
-      return null;
-    }
+    // if (!widget || !widget.active) {
+    //   return null;
+    // }
 
-    // Parse cached data (JSONB field contains reviews)
-    const cachedData = widget.cachedData as any || {};
-    const reviews = cachedData.reviews || [];
-    const lastRefresh = cachedData.lastRefresh || 0;
+    // // Parse cached data (JSONB field contains reviews)
+    // const cachedData = widget.cachedData as any || {};
+    // const reviews = cachedData.reviews || [];
+    // const lastRefresh = cachedData.lastRefresh || 0;
 
-    return {
-      widget,
-      reviews,
-      lastRefresh,
-    };
+    // return {
+    //   widget,
+    //   reviews,
+    //   lastRefresh,
+    // };
   } catch (error) {
     console.error("Failed to fetch widget data:", error);
     return null;
@@ -91,11 +92,11 @@ export default async function WidgetPage({ params }: WidgetPageProps) {
       }}
     >
       <Suspense fallback={<div>Loading widget...</div>}>
-        <WidgetRenderer
+        {/* <WidgetRenderer
           widget={data.widget}
           reviews={data.reviews}
           widgetId={uuid}
-        />
+        /> */}
       </Suspense>
 
       {/* Iframe communication script using modern ResizeObserver */}
