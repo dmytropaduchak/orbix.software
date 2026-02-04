@@ -1,6 +1,7 @@
 import { pgTable, serial, timestamp, boolean, jsonb, varchar } from "drizzle-orm/pg-core";
 // import { relations } from "drizzle-orm";
 
+
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   email: varchar("email").notNull().unique(),
@@ -48,7 +49,7 @@ export const transactions = pgTable("transactions", {
 export const googlePlaces = pgTable("google_places", {
   id: serial("id").primaryKey(),
   uuid: varchar("uuid").notNull(),
-  data: jsonb("data").notNull(),
+  data: jsonb("data"),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
@@ -113,4 +114,3 @@ export const googlePlaces = pgTable("google_places", {
 //     references: [users.id],
 //   }),
 // }));
-

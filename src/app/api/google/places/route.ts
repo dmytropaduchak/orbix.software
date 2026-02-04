@@ -1,9 +1,9 @@
-import { db } from "@/db";
-import { googlePlaces } from "@/db/schema";
+import { db } from "../../../../db";
+import { googlePlaces } from "../../../../db/schema";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
-const fetchPlaceID = async (textQuery: string) => {
+export const fetchGooglePlaceID = async (textQuery: string) => {
   const url = new URL(`${process.env.GOOGLE_PLACES_API_URL}:searchText`);
   const data = await fetch(url.toString(), {
     method: "POST",
@@ -15,9 +15,9 @@ const fetchPlaceID = async (textQuery: string) => {
   });
   const dataJson = await data.json();
   return dataJson?.places?.[0]?.id;
-};
-
-const fetchPlaceData = async (placeID: string) => {
+}
+  
+export const fetchGooglePlaceData = async (placeID: string) => {
   const url = new URL(`${process.env.GOOGLE_PLACES_API_URL}/${placeID}`);
 
   const data = await fetch(url.toString(), {
@@ -29,26 +29,6 @@ const fetchPlaceData = async (placeID: string) => {
   });
   return data.json();
 }
-
-const fetchPlace = async (str: string) => {
-  if (str.startsWith("ChIJ")) {
-    return str;
-  }
-  if (/[?&]placeid=([A-Za-z0-9_-]+)/.test(str)) {
-    const url = new URL(str);
-    return url.searchParams.get("placeid");
-  }
-  if (/cid[=\/](\d+)/.test(str)) {
-    const cid = str.match(/cid[=\/](\d+)/);
-    return fetchPlaceID(`google maps cid ${cid?.[1]}`);
-  }
-  if (/place\/(.*?)\//.test(str)) {
-    const place = str.match(/place\/(.*?)\//);
-    return fetchPlaceID(place?.[1]!);
-  }
-  return fetchPlaceID(str);
-}
-
 
 class GooglePlace {
   constructor(
@@ -73,13 +53,13 @@ class GooglePlace {
   private async fetchUuid() {
     if (/cid[=\/](\d+)/.test(this.str)) {
       const cid = this.str.match(/cid[=\/](\d+)/);
-      return this.fetchPlaceID(`google maps cid ${cid?.[1]}`);
+      return fetchGooglePlaceID(`google maps cid ${cid?.[1]}`);
     }
     if (/place\/(.*?)\//.test(this.str)) {
       const place = this.str.match(/place\/(.*?)\//);
-      return this.fetchPlaceID(place?.[1]!);
+      return fetchGooglePlaceID(place?.[1]!);
     }
-    return this.fetchPlaceID(this.str);
+    return fetchGooglePlaceID(this.str);
   }
 
   private async fetchData(uuid: string) {
@@ -90,37 +70,12 @@ class GooglePlace {
     if (rows.length) {
       return rows[0].data;
     } else {
-      const data = await fetchPlaceData(uuid!);
-      await db.insert(googlePlaces).values({ uuid, data });
+      const data = await fetchGooglePlaceData(uuid!);
+      await db
+        .insert(googlePlaces)
+        .values({ uuid, data });
       return data;
     }
-  }
-
-  private async fetchPlaceID(textQuery: string) {
-    const url = new URL(`${process.env.GOOGLE_PLACES_API_URL}:searchText`);
-    const data = await fetch(url.toString(), {
-      method: "POST",
-      headers: {
-        "X-Goog-Api-Key": process.env.GOOGLE_PLACES_API_KEY!,
-        "X-Goog-FieldMask": "places.id",
-      },
-      body: JSON.stringify({ textQuery }),
-    });
-    const dataJson = await data.json();
-    return dataJson?.places?.[0]?.id;
-  }
-  
-  private async fetchPlaceData(placeID: string) {
-    const url = new URL(`${process.env.GOOGLE_PLACES_API_URL}/${placeID}`);
-
-    const data = await fetch(url.toString(), {
-      method: "GET",
-      headers: {
-        "X-Goog-Api-Key": process.env.GOOGLE_PLACES_API_KEY!,
-        "X-Goog-FieldMask": "id,displayName,formattedAddress,location,primaryType,types,rating,userRatingCount,reviews,googleMapsUri,websiteUri,internationalPhoneNumber",
-      },
-    });
-    return data.json();
   }
 }
 

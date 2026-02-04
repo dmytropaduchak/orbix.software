@@ -26,6 +26,12 @@ export interface Message {
 
 export enum WIDGETS {
   GOOGLE_REVIEWS = "google-reviews",
+  FAQ = "faq",
+  QUIZ = "quiz",
+  SUPPORT_UKRAINE = "support-ukraine",
+  CUSTOM_LINKS = "custom-links",
+  CONTACT_CARD = "contact-card",
+  GPT_CHAT_ASSISTANT = "gpt-chat-assistant",
 }
 
 export interface State {
@@ -43,4 +49,3 @@ export const atom = atomWithStorage<State>(name, {
   color: "rgb(105, 234, 58)",
   messages: [],
 });
-

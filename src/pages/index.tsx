@@ -2,6 +2,7 @@ import { Box, alpha, Button, Stack, useTheme, Typography } from "@mui/material";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import Head from "next/head";
+import { AutoAwesome } from "@mui/icons-material";
 
 export default function Page() {
   const theme = useTheme();
@@ -51,11 +52,8 @@ export default function Page() {
                 fontWeight: 600,
                 fontSize: 60,
                 flexWrap: "wrap",
-                // fontSize: { xs: 36, md: 64 },
               }}>
                 Website <Box component="span" sx={{ color: "primary.main", marginLeft: 1 }}>Widgets</Box> Made Easy
-                {/* Powerful Widgets
-                Effortless Integration</Box> */}
               </Typography>
               <Typography variant="body1" sx={{ fontWeight: 300, fontSize: 18 }}>
                 Add powerful components to any site with one script. Secure, fast, and fully customizable.
@@ -71,6 +69,7 @@ export default function Page() {
                 <Button variant="contained" size="large" href="/login" sx={{
                   borderRadius: 16,
                   paddingX: 3,
+                  paddingLeft: 2,
                   textTransform: "none",
                   boxShadow: (theme) => `0 0 22px ${alpha(theme.palette.primary.main, 0.45)}`,
                   "&:hover": {
@@ -88,7 +87,9 @@ export default function Page() {
                     width: "100%",
                   },
                 }}>
-                  Create a Widget
+                  <AutoAwesome fontSize="small" sx={{
+                    marginRight: 1,
+                  }} /> Create a Widget
                 </Button>
                 <Button variant="outlined" href="/sandbox" sx={{
                   borderRadius: 16,
