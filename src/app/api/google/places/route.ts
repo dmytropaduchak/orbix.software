@@ -17,7 +17,7 @@ export const fetchGooglePlaceID = async (textQuery: string) => {
   return dataJson?.places?.[0]?.id;
 }
   
-export const fetchGooglePlaceData = async (placeID: string) => {
+export const fetchGooglePlaceData = async (placeID: string): Promise<any> => {
   const url = new URL(`${process.env.GOOGLE_PLACES_API_URL}/${placeID}`);
 
   const data = await fetch(url.toString(), {

@@ -7,7 +7,7 @@ import { useAtom } from "jotai";
 import { atom, WIDGETS } from "../../atom/atom";
 import { useRef, useState } from "react";
 import { ArrowForwardIos, Description, Phonelink, Refresh } from "@mui/icons-material";
-import FAQ from "@/icons/faq";
+// import FAQ from "@/icons/faq";
 
 const DEFAULT_URL = "https://mysmi.uk/";
 
