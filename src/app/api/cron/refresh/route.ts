@@ -2,7 +2,7 @@ import { googlePlaces } from "../../../../db/schema";
 import { db } from "../../../../db";
 import { NextRequest, NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
-import { fetchGooglePlaceData } from "../../google/places/route";
+import { fetchGooglePlaceData } from "../../../../google/google";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;
